@@ -9,14 +9,13 @@ public interface UserService {
     UserDTO createUser(UserDTO userDTO);
 
     //Update User
-//    UserDTO updateUser(UserDTO userDTO, int id);
+    UserDTO updateUser(Long id, UserDTO userDTO);
 
     //Delete Uer
-//    void deleteUser(int id);
+    void deleteUser(long id);
 
     //Get all users
-
-//    List<UserDTO> getAllUser();
+    List<UserDTO> getAllUsers();
 
 
     //Get user by id
