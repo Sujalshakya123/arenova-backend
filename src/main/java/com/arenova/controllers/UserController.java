@@ -14,6 +14,7 @@ import java.util.List;
 //controller is depended on user service layer
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:5173")
 @AllArgsConstructor
 public class UserController {
 

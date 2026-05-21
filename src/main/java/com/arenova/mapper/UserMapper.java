@@ -9,9 +9,9 @@ public class UserMapper {
         public static UserDTO toDTO (User user){
             return new UserDTO(
                     user.getId(),
-                    user.getEmail(),
-                    user.getContact(),
                     user.getUsername(),
+                    user.getContact(),
+                    user.getEmail(),
                     user.getPassword()
             );
         }
@@ -20,9 +20,9 @@ public class UserMapper {
         public static User toEntity(UserDTO userDTO){
             return new User(
                     userDTO.getId(),
-                    userDTO.getEmail(),
                     userDTO.getUsername(),
                     userDTO.getContact(),
+                    userDTO.getEmail(),
                     userDTO.getPassword()
             );
         }
