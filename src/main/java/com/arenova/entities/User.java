@@ -1,5 +1,7 @@
 package com.arenova.entities;
 
+import com.arenova.dtos.enums.AuthProvider;
+import com.arenova.dtos.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +30,10 @@ public class User {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
 
 }

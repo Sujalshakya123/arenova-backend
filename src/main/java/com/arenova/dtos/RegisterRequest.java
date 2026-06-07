@@ -1,5 +1,7 @@
 package com.arenova.dtos;
 
+import com.arenova.dtos.enums.AuthProvider;
+import com.arenova.dtos.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -13,4 +15,8 @@ public class RegisterRequest {
     private String email;
     @NotBlank
     private String password;
+
+    private Role role;
+
+    private AuthProvider authProvider;
 }

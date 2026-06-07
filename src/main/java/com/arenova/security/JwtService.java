@@ -1,6 +1,7 @@
 package com.arenova.security;
 
 
+import com.arenova.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,15 +10,21 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class JwtService {
     private final String SECRET =  "mysecretkeymysecretkeymysecretkey123456";
     private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
 
-    public String generateToken(String email){
+    public String generateToken(User user){
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", user.getRole().name());
+
+
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getEmail())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + 1000*60*60))
                 .signWith(key, SignatureAlgorithm.HS256)
