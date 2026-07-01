@@ -22,6 +22,10 @@ public interface UserService {
     UserDTO getUserById(Long id);
 
 
+    void updateProfilePage(Long id, String photoUrl);
+
+    void updateProfilePhoto(Long id, String photoUrl);
+
     //Get user by Username
 //    UserDTO getUserByUsername(String username);
 }

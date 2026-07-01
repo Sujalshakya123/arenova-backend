@@ -36,6 +36,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateProfilePage(Long id, String photoUrl) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
+        user.setProfilePhotoUrl(photoUrl);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateProfilePhoto(Long id, String photoUrl) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not Found"));
+        user.setProfilePhotoUrl(photoUrl);
+        userRepository.save(user);
+    }
+
+    @Override
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         User user =  userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User ID NOT FOUND"));
 

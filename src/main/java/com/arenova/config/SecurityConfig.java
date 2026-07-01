@@ -1,6 +1,8 @@
 package com.arenova.config;
 
 import com.arenova.security.JwtAuthFilter;
+import com.arenova.security.OAuth2SuccessHandler;
+import com.arenova.services.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,8 @@ import java.util.List;
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+    private final CustomOAuth2UserService oauthService;
+    private final OAuth2SuccessHandler successHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -41,9 +45,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**")
                         .permitAll()
+                        .requestMatchers("/uploads/**")
+                        .permitAll()
                         .anyRequest()
                         .authenticated()
                 )
+                .oauth2Login(oauth -> oauth
+                        .userInfoEndpoint(user ->
+                                user.userService(oauthService)
+                        )
+                        .successHandler(successHandler)
+                )
+
                 .addFilterBefore(
                         jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class

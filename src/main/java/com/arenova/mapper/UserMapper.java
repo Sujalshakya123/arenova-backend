@@ -14,7 +14,8 @@ public class UserMapper {
                     user.getEmail(),
                     user.getPassword(),
                     user.getRole(),
-                    user.getAuthProvider()
+                    user.getAuthProvider(),
+                    user.getProfilePhotoUrl()
             );
         }
 
@@ -27,7 +28,8 @@ public class UserMapper {
                     userDTO.getEmail(),
                     userDTO.getPassword(),
                     userDTO.getRole(),
-                    userDTO.getAuthProvider()
+                    userDTO.getAuthProvider(),
+                    userDTO.getProfilePhotoUrl()
             );
         }
 }

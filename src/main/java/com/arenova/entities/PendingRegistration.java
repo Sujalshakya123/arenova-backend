@@ -8,22 +8,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-@Entity
-public class User {
+public class PendingRegistration {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //auto increment
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
-
-    @Column(length = 10)
-    private String contact;
 
     @Column(unique = true)
     private String email;
@@ -36,7 +34,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AuthProvider authProvider;
 
-    @Column(name = "profile_photo_url")
-    private String profilePhotoUrl;
+    private String otp;
 
+    private LocalDateTime expiryTime;
+
+    @Builder.Default
+    private Integer attempts = 0;
+
+    private LocalDateTime resendAvailableAt;
 }
