@@ -1,4 +1,4 @@
-package com.arenova.dtos;
+package com.arenova.dtos.Auth;
 
 import lombok.Data;
 

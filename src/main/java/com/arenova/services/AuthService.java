@@ -2,8 +2,11 @@ package com.arenova.services;
 
 
 import com.arenova.dtos.*;
+import com.arenova.dtos.Auth.AuthResponse;
+import com.arenova.dtos.Auth.LoginRequest;
+import com.arenova.dtos.Auth.RegisterRequest;
+import com.arenova.dtos.Auth.RegisterResponse;
 import com.arenova.dtos.enums.AuthProvider;
-import com.arenova.dtos.enums.Role;
 import com.arenova.entities.PendingRegistration;
 import com.arenova.entities.User;
 import com.arenova.exceptions.ResourceNotFoundException;
@@ -16,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,7 @@ public class AuthService {
     //Registration
 
 
-    public String register(RegisterRequest request) throws BadRequestException {
+    public RegisterResponse register(RegisterRequest request) throws BadRequestException {
 
         if (repository.findByEmail(request.getEmail()).isPresent()) {
             throw new BadRequestException(
@@ -75,7 +77,11 @@ public class AuthService {
                 otp
         );
 
-        return "OTP sent successfully.";
+        return RegisterResponse.builder()
+                .success(true)
+                .message("Register Success. Check Email for OTP Code")
+                .timestamp(LocalDateTime.now())
+                .build();
     }
 
     public AuthResponse verify(VerifyDTO request) throws BadRequestException {

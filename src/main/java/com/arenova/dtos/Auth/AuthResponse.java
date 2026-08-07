@@ -1,6 +1,6 @@
-package com.arenova.dtos;
+package com.arenova.dtos.Auth;
 
-
+import com.arenova.dtos.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,3 +12,4 @@ public class AuthResponse {
     private String token;
     private UserDTO userDTO;
 }
+

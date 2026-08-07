@@ -1,4 +1,4 @@
-package com.arenova.dtos;
+package com.arenova.dtos.Auth;
 
 import com.arenova.dtos.enums.AuthProvider;
 import com.arenova.dtos.enums.Role;

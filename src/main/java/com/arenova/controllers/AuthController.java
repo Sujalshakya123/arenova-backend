@@ -2,11 +2,14 @@ package com.arenova.controllers;
 
 
 import com.arenova.dtos.*;
+import com.arenova.dtos.Auth.AuthResponse;
+import com.arenova.dtos.Auth.LoginRequest;
+import com.arenova.dtos.Auth.RegisterRequest;
+import com.arenova.dtos.Auth.RegisterResponse;
 import com.arenova.entities.User;
 import com.arenova.mapper.UserMapper;
 import com.arenova.respositories.UserRepository;
 import com.arenova.services.AuthService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +24,7 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(
+    public ResponseEntity<RegisterResponse> register(
             @RequestBody RegisterRequest request
     ) throws BadRequestException {
 
