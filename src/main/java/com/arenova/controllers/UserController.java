@@ -1,8 +1,13 @@
 package com.arenova.controllers;
 
+import com.arenova.dtos.ChangePasswordRequest;
+import com.arenova.dtos.PreferredGamesRequest;
+import com.arenova.dtos.UpdateStatusRequest;
 import com.arenova.dtos.UserDTO;
+import com.arenova.dtos.enums.Role;
 import com.arenova.services.UserService;
 import lombok.AllArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +34,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) throws BadRequestException {
         UserDTO savedUser = userService.createUser(userDTO);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -38,11 +43,11 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserDTO>  getUserById(@PathVariable() Long id){
         UserDTO user = userService.getUserById(id);
-        return new ResponseEntity<>(user, HttpStatus.FOUND);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) throws BadRequestException {
         UserDTO user = userService.updateUser(id, userDTO);
         return new ResponseEntity<>(user , HttpStatus.OK);
     }
@@ -56,9 +61,43 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers(){
-        List<UserDTO> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers(
+            @RequestParam(required = false) Role role
+    ){
+        List<UserDTO> users = role == null
+                ? userService.getAllUsers()
+                : userService.getUsersByRole(role);
         return new ResponseEntity<>(users , HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/password")
+    public ResponseEntity<String> changePassword(
+            @PathVariable Long id,
+            @RequestBody ChangePasswordRequest request
+    ) throws BadRequestException {
+        return ResponseEntity.ok(
+                userService.changePassword(id, request)
+        );
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<UserDTO> updateStatus(
+            @PathVariable Long id,
+            @RequestBody UpdateStatusRequest request
+    ) throws BadRequestException {
+        return ResponseEntity.ok(
+                userService.updateStatus(id, request)
+        );
+    }
+
+    @PutMapping("/{id}/preferred-games")
+    public ResponseEntity<UserDTO> updatePreferredGames(
+            @PathVariable Long id,
+            @RequestBody PreferredGamesRequest request
+    ) {
+        return ResponseEntity.ok(
+                userService.updatePreferredGames(id, request)
+        );
     }
 
     //Photo
@@ -93,4 +132,3 @@ public class UserController {
         }
     }
 }
-

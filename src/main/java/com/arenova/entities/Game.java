@@ -1,9 +1,7 @@
 package com.arenova.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.arenova.dtos.enums.GameStatus;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,11 +19,21 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /** Frontend-friendly id, e.g. valorant, pubg-mobile */
+    @Column(unique = true)
+    private String slug;
+
     private String gname;              // "Valorant"
 
     private String genre;             // "Tactical Shooter"
 
-    private String description;       // "A 5v5 character-based tactical FPS..."
+    @Column(length = 2000)
+    private String description;       // short pitch
+
+    @Column(length = 4000)
+    private String about;             // longer about text
+
+    private String partner;           // "Official League Partner"
 
     private String developer;         // "Riot Games"
 
@@ -33,9 +41,16 @@ public class Game {
 
     private String platforms;         // "Windows"
 
+    @Column(length = 2000)
     private String bannerImageUrl;    // hero banner image
 
-    private String iconImageUrl;      // small game icon (bottom right)
+    @Column(length = 2000)
+    private String iconImageUrl;      // cover / icon
 
+    private String imageKey;          // valorant, pubg, freefire, ...
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private GameStatus status = GameStatus.AVAILABLE;
 
 }

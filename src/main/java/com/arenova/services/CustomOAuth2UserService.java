@@ -2,6 +2,7 @@ package com.arenova.services;
 
 import com.arenova.dtos.enums.AuthProvider;
 import com.arenova.dtos.enums.Role;
+import com.arenova.dtos.enums.UserStatus;
 import com.arenova.entities.User;
 import com.arenova.respositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,7 @@ public class CustomOAuth2UserService
                             );
 
                             newUser.setRole(Role.PLAYER);
+                            newUser.setStatus(UserStatus.ACTIVE);
 
                             return userRepository.save(
                                     newUser

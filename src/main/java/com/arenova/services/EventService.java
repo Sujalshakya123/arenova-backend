@@ -1,24 +1,32 @@
 package com.arenova.services;
 
+import com.arenova.dtos.CreateEventRequest;
 import com.arenova.dtos.EventDTO;
-import com.arenova.dtos.UserDTO;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.arenova.dtos.PlatformStatsDTO;
+import org.apache.coyote.BadRequestException;
 
-@Service
-//@RequiredArgsConstructor
+import java.util.List;
+
 public interface EventService {
 
-    //Create Event
-    EventDTO createEvent(EventDTO eventDTO);
+    EventDTO createEvent(CreateEventRequest request) throws BadRequestException;
 
-    //Update Event
-    EventDTO updateEvent(Long id, EventDTO eventDTO);
+    EventDTO updateEvent(Long id, CreateEventRequest request) throws BadRequestException;
 
-    //Delete Event
     void deleteEvent(Long id);
 
-
-    //Get event by id
     EventDTO getEventById(Long id);
+
+    List<EventDTO> getEventsByProject(Long projectId);
+
+    List<EventDTO> getMyEvents();
+
+    /** Public browse: LIVE + COMPLETED (and any with null status treated as live). */
+    List<EventDTO> getPublicEvents();
+
+    /** Homepage stats: public events, player accounts, and ongoing bracket matches. */
+    PlatformStatsDTO getPublicPlatformStats();
+
+    EventDTO uploadDetailBanner(Long id, org.springframework.web.multipart.MultipartFile file)
+            throws Exception;
 }

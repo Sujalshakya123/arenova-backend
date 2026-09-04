@@ -19,4 +19,7 @@ public class RegisterRequest {
     private Role role;
 
     private AuthProvider authProvider;
+
+    /** Player-only: comma-ready game id slug, e.g. pubg, valorant */
+    private String primaryGame;
 }

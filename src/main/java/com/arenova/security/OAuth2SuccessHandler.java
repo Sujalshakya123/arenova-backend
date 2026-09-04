@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
@@ -39,6 +40,18 @@ public class OAuth2SuccessHandler
                 userRepository
                         .findByEmail(email)
                         .orElseThrow();
+
+        if (!AccountStatusSupport.isUsable(user.getStatus())) {
+            String message = AccountStatusSupport.blockedMessage(user.getStatus());
+            String redirect = UriComponentsBuilder
+                    .fromUriString("http://localhost:5173/login")
+                    .queryParam("error", message)
+                    .encode()
+                    .build()
+                    .toUriString();
+            response.sendRedirect(redirect);
+            return;
+        }
 
         String token =
                 jwtService.generateToken(user);

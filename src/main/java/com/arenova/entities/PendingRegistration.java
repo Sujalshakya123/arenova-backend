@@ -42,4 +42,7 @@ public class PendingRegistration {
     private Integer attempts = 0;
 
     private LocalDateTime resendAvailableAt;
+
+  /** Player-only preferred game slug saved until OTP verification */
+    private String primaryGame;
 }
